@@ -16,6 +16,17 @@ SENTENCE = (
 
 
 def main() -> None:
+    # Gate self-check, mirroring the sealed scorer: UTF-8 text of 1-200
+    # characters, not only white space, a single line, printable only.
+    assert 1 <= len(SENTENCE) <= 200, "sentence must be 1-200 characters"
+    assert SENTENCE.strip(), "sentence must not be only white space"
+    assert "\n" not in SENTENCE and "\r" not in SENTENCE, (
+        "sentence must be a single line"
+    )
+    assert SENTENCE.isprintable(), (
+        "sentence must contain only printable characters"
+    )
+
     out_dir = os.environ.get("MAKEFUN_OUTPUT_DIR", "/output")
     os.makedirs(out_dir, exist_ok=True)
     path = os.path.join(out_dir, "entry.txt")
